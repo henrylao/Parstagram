@@ -12,6 +12,7 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var passwordField: UITextField!
     @IBOutlet weak var usernameField: UITextField!
     
+    
     @IBAction func onSignIn(_ sender: Any) {
     }
     @IBAction func onSignUp(_ sender: Any) {
