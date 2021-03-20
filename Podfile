@@ -8,6 +8,7 @@ target 'Parstagram' do
   # Pods for Parstagra
   # Add parse pods and install
   pod 'Parse'
+  pod 'AlamofireImage'
 
 
   target 'ParstagramTests' do
