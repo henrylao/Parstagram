@@ -15,6 +15,7 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return posts.count
+//        return 5
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -24,17 +25,21 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
         let user = post["user"] as! PFUser
         cell.userLabel.text = user.username
         cell.descriptionLabel.text = post["description"] as? String
-        
+
         let imageFile = post["image"] as! PFFileObject
         let urlString = imageFile.url!
         let url = URL(string: urlString)!
         cell.photoView.af.setImage(withURL: url)
+//        cell.userLabel.text = "Hello World"
+//        cell.descriptionLabel.text = "Goodbye World"
         return cell
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        tableView.delegate = self
+        tableView.dataSource = self
         // Do any additional setup after loading the view.
     }
     
