@@ -10,8 +10,9 @@ import Parse
 
 class FeedViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     var TAG = "FeedView"
+    var isMorePostsToLoad = true
     var posts = [PFObject]()
-    var numberOfPosts: Int!
+//    var numberOfPosts: Int!
     let refreshFeed = UIRefreshControl()
     
     @IBOutlet weak var tableView: UITableView!
@@ -82,14 +83,14 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
     // endless scroller
     // table signal to load more posts
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if indexPath.row + 1 == posts.count{
+        if indexPath.row + 1 == posts.count && isMorePostsToLoad{
             print(TAG, "Endless Scroller: Attempting to load more posts")
-            self.loadMorePosts()
+            self.loadMorePosts(lastIndex: indexPath.row)
         }
     }
     
 //
-    func loadMorePosts(){
+    func loadMorePosts(lastIndex: Int){
 //        numberOfPosts += 20
 //        let payload = [
 //            "count":numberOfTweets
@@ -97,17 +98,23 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
         let query = PFQuery(className: "Post")
         query.includeKey("user")
         query.order(byDescending: "createdAt")
+        query.skip = posts.count
+//        query.whereKey("created_at", lessThanOrEqualTo:  posts[lastIndex].createdAt)
 //        query.
         query.limit = 20
         
         query.findObjectsInBackground{
             (posts, error) in
-            if posts != nil {
+            if posts != nil && posts!.count > 0{
 //                posts = posts! as [PFObject]
 //                self.posts.removeAll()
                 self.posts.append(contentsOf: posts!)
                 self.tableView.reloadData()
                 self.refreshFeed.endRefreshing()
+            }
+            else {
+                self.isMorePostsToLoad = false
+                print(self.TAG, "Load More: No more posts available in database to load!")
             }
         }
 
