@@ -20,11 +20,11 @@ class LoginViewController: UIViewController {
         PFUser.logInWithUsername(inBackground: username, password: password) {
             (user,error) in
             if user != nil{
-                print(self.TAG, "Success: Account created!")
+                print(self.TAG, "Success: Successfully logged in!")
                 self.performSegue(withIdentifier: "loginSegue", sender: nil)
             }
             else {
-                print(self.TAG, "Error: \(error?.localizedDescription)")
+                print(self.TAG, "Error: \(String(describing: error?.localizedDescription))")
             }
         }
     }
@@ -38,7 +38,7 @@ class LoginViewController: UIViewController {
                 print(self.TAG, "Success: Account created!")
                 self.performSegue(withIdentifier: "loginSegue", sender:nil)
             } else {
-                print(self.TAG, "Error: \(error?.localizedDescription)")
+                print(self.TAG, "Error: \(String(describing: error?.localizedDescription))")
             }
         }
         
