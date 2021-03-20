@@ -8,7 +8,7 @@
 import UIKit
 
 class FeedViewController: UIViewController {
-
+    var TAG = "Feed"
     override func viewDidLoad() {
         super.viewDidLoad()
 

@@ -69,11 +69,12 @@
                     <connections>
                         <outlet property="passwordField" destination="3hz-uP-lqL" id="95s-r6-fsk"/>
                         <outlet property="usernameField" destination="iEN-UR-de5" id="uKA-Pm-CnX"/>
+                        <segue destination="Cds-87-F1f" kind="presentation" identifier="loginSegue" id="Ays-UC-TuQ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="140.57971014492756" y="118.52678571428571"/>
+            <point key="canvasLocation" x="207" y="269"/>
         </scene>
         <!--Feed View Controller-->
         <scene sceneID="kGa-yR-suW">
@@ -85,16 +86,24 @@
                         <viewLayoutGuide key="safeArea" id="2pP-xZ-kqD"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
-                    <navigationItem key="navigationItem" id="pKc-TR-cSr"/>
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" id="pKc-TR-cSr">
+                        <barButtonItem key="rightBarButtonItem" title="Item" image="insta_camera_btn" id="hHA-qa-Th8">
+                            <connections>
+                                <segue destination="dQD-sx-UVu" kind="presentation" id="whW-1Z-eFd"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="g8f-Qb-CJa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1852.1739130434785" y="118.52678571428571"/>
+            <point key="canvasLocation" x="1920" y="269"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="83l-AY-PcN">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Cds-87-F1f" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" modalPresentationStyle="fullScreen" id="Cds-87-F1f" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="8lq-Bh-vME">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
@@ -107,10 +116,26 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="f6v-05-xtF" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="942.02898550724649" y="118.52678571428571"/>
+            <point key="canvasLocation" x="1010" y="269"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="rkc-xg-o6a">
+            <objects>
+                <viewController id="dQD-sx-UVu" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="TGk-yB-dRU">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="fmT-jW-P1q"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="vSH-13-FS5" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2720" y="269"/>
         </scene>
     </scenes>
     <resources>
+        <image name="insta_camera_btn" width="25" height="25"/>
         <image name="instagram_logo" width="255" height="108"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
