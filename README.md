@@ -25,3 +25,7 @@ Here's a walkthrough of implemented user stories:
 <img src=
 https://github.com/henrylao/Parstagram/blob/main/docs/QTvrdlDttZ.gif
 width=400><br>
+
+<img src=
+https://github.com/henrylao/Parstagram/blob/main/docs/tu4cdBFBpA.gif
+width=400><br>
