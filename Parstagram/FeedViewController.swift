@@ -12,7 +12,6 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
     var TAG = "FeedView"
     var isMorePostsToLoad = true
     var posts = [PFObject]()
-//    var numberOfPosts: Int!
     let refreshFeed = UIRefreshControl()
     
     @IBOutlet weak var tableView: UITableView!
@@ -20,7 +19,6 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return posts.count
-//        return 5
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -35,8 +33,6 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
         let urlString = imageFile.url!
         let url = URL(string: urlString)!
         cell.photoView.af.setImage(withURL: url)
-//        cell.userLabel.text = "Hello World"
-//        cell.descriptionLabel.text = "Goodbye World"
         return cell
     }
     
@@ -57,9 +53,10 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
+        // initial feed setup
         loadPosts()
     }
+    
     @objc func loadPosts(){
         let query = PFQuery(className: "Post")
         query.includeKey("user")
@@ -70,8 +67,6 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
         query.findObjectsInBackground{
             (posts, error) in
             if posts != nil {
-//                posts = posts! as [PFObject]
-//                self.posts.removeAll()
                 self.posts=posts!
                 self.tableView.reloadData()
                 self.refreshFeed.endRefreshing()
@@ -89,18 +84,12 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
     }
     
-//
+    // endless scroller query handler
     func loadMorePosts(lastIndex: Int){
-//        numberOfPosts += 20
-//        let payload = [
-//            "count":numberOfTweets
-//        ]
         let query = PFQuery(className: "Post")
         query.includeKey("user")
         query.order(byDescending: "createdAt")
         query.skip = posts.count
-//        query.whereKey("created_at", lessThanOrEqualTo:  posts[lastIndex].createdAt)
-//        query.
         query.limit = 20
         
         query.findObjectsInBackground{
