@@ -9,7 +9,7 @@ import UIKit
 import Parse
 
 class FeedViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-    var TAG = "Feed"
+    var TAG = "FeedView"
     var posts = [PFObject]()
     var numberOfPosts: Int!
     let refreshFeed = UIRefreshControl()
@@ -62,6 +62,8 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
     @objc func loadPosts(){
         let query = PFQuery(className: "Post")
         query.includeKey("user")
+        query.order(byDescending: "createdAt")
+
         query.limit = 20
         
         query.findObjectsInBackground{
@@ -78,34 +80,39 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     // endless scroller
-//    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-//        if indexPath.row + 1 == posts.count{
-//            print(TAG, "loading more posts")
-////            self.loadMorePosts()
-//        }
-//    }
+    // table signal to load more posts
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if indexPath.row + 1 == posts.count{
+            print(TAG, "Endless Scroller: Attempting to load more posts")
+            self.loadMorePosts()
+        }
+    }
     
 //
-//    func loadMorePosts(){
+    func loadMorePosts(){
 //        numberOfPosts += 20
-////        let payload = [
-////            "count":numberOfTweets
-////        ]
-//        TwitterAPICaller.client?.getDictionariesRequest(url: self.timelineBaseUrl, parameters: payload, success: { (tweets : [NSDictionary]) in
-//            self.tweetArray.removeAll()
-//            for t in tweets{
-//                self.tweetArray.append(t)
-//            }
-//            self.tableView.reloadData()
-//            print(self.TAG, "successfully reloaded cell data")
-//            self.refreshTweets.endRefreshing()
-//            print(self.TAG,"successfully ended refreshing")
-//
-//        }, failure: {_  in
-//            print(self.TAG,"failed to load more tweets")
-//        })
-//
-//    }
+//        let payload = [
+//            "count":numberOfTweets
+//        ]
+        let query = PFQuery(className: "Post")
+        query.includeKey("user")
+        query.order(byDescending: "createdAt")
+//        query.
+        query.limit = 20
+        
+        query.findObjectsInBackground{
+            (posts, error) in
+            if posts != nil {
+//                posts = posts! as [PFObject]
+//                self.posts.removeAll()
+                self.posts.append(contentsOf: posts!)
+                self.tableView.reloadData()
+                self.refreshFeed.endRefreshing()
+            }
+        }
+
+
+    }
     
 
     /*
