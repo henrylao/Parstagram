@@ -30,3 +30,7 @@ width=400><br>
 <img src=
 https://github.com/henrylao/Parstagram/blob/main/docs/tu4cdBFBpA.gif
 width=400><br>
+
+<img src=
+https://github.com/henrylao/Parstagram/blob/main/docs/4sPUYEeerP.gif
+width=400><br>
