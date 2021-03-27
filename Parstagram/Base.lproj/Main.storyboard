@@ -172,6 +172,28 @@
                                             <outlet property="nameLabel" destination="A7l-QT-bws" id="1Nd-gd-ign"/>
                                         </connections>
                                     </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="AddCommentCell" id="jIP-lv-9yS">
+                                        <rect key="frame" x="0.0" y="331" width="414" height="37.5"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="jIP-lv-9yS" id="cAD-G8-1QS">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="37.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add a comment..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pdq-sr-I9C">
+                                                    <rect key="frame" x="16" y="8" width="390" height="21.5"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="Pdq-sr-I9C" firstAttribute="top" secondItem="cAD-G8-1QS" secondAttribute="top" constant="8" id="6EW-DW-9fN"/>
+                                                <constraint firstAttribute="bottom" secondItem="Pdq-sr-I9C" secondAttribute="bottom" constant="8" id="AZ3-gB-EJw"/>
+                                                <constraint firstAttribute="trailing" secondItem="Pdq-sr-I9C" secondAttribute="trailing" constant="8" id="ZGh-tJ-psp"/>
+                                                <constraint firstItem="Pdq-sr-I9C" firstAttribute="leading" secondItem="cAD-G8-1QS" secondAttribute="leading" constant="16" id="vmX-jD-ix4"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
                                 </prototypes>
                             </tableView>
                         </subviews>

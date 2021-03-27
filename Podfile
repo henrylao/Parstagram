@@ -9,7 +9,7 @@ target 'Parstagram' do
   # Add parse pods and install
   pod 'Parse'
   pod 'AlamofireImage'
-
+  pod 'MessageInputBar'
 
   target 'ParstagramTests' do
     inherit! :search_paths
