@@ -17,6 +17,7 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
     @IBOutlet weak var tableView: UITableView!
     
     @IBAction func onLogout(_ sender: Any) {
+        print(TAG, "onLogout")
         PFUser.logOut()
         
         let main = UIStoryboard(name: "Main", bundle: nil)
@@ -26,23 +27,65 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
         delegate.window?.rootViewController = loginViewController
     }
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return posts.count
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "PostCell") as! PostCell
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let post = posts[indexPath.section]
         
-        let post = posts[indexPath.row]
-        let user = post["user"] as! PFUser
-        cell.userLabel.text = user.username
-        cell.descriptionLabel.text = post["description"] as? String
+        let comment = PFObject(className: "Comment")
+        comment["text"] = "This is a random comment"
+        comment["post"] = post
+        comment["user"] = PFUser.current()!
+        
+        post.add(comment, forKey: "comment")
+        
+        post.saveInBackground {
+            (success, error) in
+            if (success) {
+                print(self.TAG, "random comment saved")
+            }
+            else {
+                print(self.TAG, "random comment no saved")
+            }
+        }
+        
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+//        return posts.count
+        let post = posts[section]
+        let comments = ( post["comment"] as? [PFObject]) ?? []
+        return 1 + comments.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let post = posts[indexPath.section]
+        let comments = (post["comment"] as? [PFObject]) ?? []
+        
+        if indexPath.row == 0 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "PostCell") as! PostCell
+            
+            let user = post["user"] as! PFUser
+            cell.userLabel.text = user.username
+            cell.descriptionLabel.text = post["description"] as? String
 
-        let imageFile = post["image"] as! PFFileObject
-        let urlString = imageFile.url!
-        let url = URL(string: urlString)!
-        cell.photoView.af.setImage(withURL: url)
-        return cell
+            let imageFile = post["image"] as! PFFileObject
+            let urlString = imageFile.url!
+            let url = URL(string: urlString)!
+            cell.photoView.af.setImage(withURL: url)
+            return cell
+        } else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "CommentCell") as! CommentCell
+            let comment = comments[indexPath.row - 1]
+            let user = comment["user"] as! PFUser
+            
+            cell.nameLabel.text = user.username
+            cell.commentLabel.text = comment["text"] as? String
+            return cell
+        }
+        
     }
     
     override func viewDidLoad() {
@@ -68,7 +111,7 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     @objc func loadPosts(){
         let query = PFQuery(className: "Post")
-        query.includeKey("user")
+        query.includeKeys(["user","comment", "comment.user"])
         query.order(byDescending: "createdAt")
 
         query.limit = 20
@@ -87,16 +130,16 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
     // endless scroller
     // table signal to load more posts
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if indexPath.row + 1 == posts.count && isMorePostsToLoad{
+        if indexPath.section + 1 == posts.count && isMorePostsToLoad{
             print(TAG, "Endless Scroller: Attempting to load more posts")
-            self.loadMorePosts(lastIndex: indexPath.row)
+            self.loadMorePosts(lastIndex: indexPath.section)
         }
     }
     
     // endless scroller query handler
     func loadMorePosts(lastIndex: Int){
         let query = PFQuery(className: "Post")
-        query.includeKey("user")
+        query.includeKeys(["user", "comment"])
         query.order(byDescending: "createdAt")
         query.skip = posts.count
         query.limit = 20
